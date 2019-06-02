@@ -1,0 +1,4 @@
+[submodule "openvpn-formula"]
+	path = openvpn-formula
+	url = https://github.com/saltstack-formulas/openvpn-formula
+	branch = master

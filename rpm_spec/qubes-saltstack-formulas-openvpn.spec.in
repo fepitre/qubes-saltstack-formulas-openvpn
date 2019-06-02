@@ -1,0 +1,44 @@
+Name:		qubes-saltstack-formulas-openvpn
+Version:	@VERSION@
+Release:	@REL@
+Summary:	saltstack-formulas-openvpn
+
+Group:		System administration tools
+License:	GPL 2.0
+BuildArch:  noarch
+URL:		https://www.qubes-os.org/
+Source:	%{name}-%{version}.tar.gz
+
+Patch0: 0001-Cache-necessary-files-for-rendering.patch
+Patch1: 0002-Fix-recursively-ownership-of-etc-openvpn.patch
+
+Requires:	qubes-mgmt-salt
+
+
+%description
+
+
+%prep
+%autosetup -N
+mv openvpn-formula/openvpn .
+%autopatch -p1
+
+%build
+
+
+%install
+make install DESTDIR=%{buildroot} LIBDIR=%{_libdir} BINDIR=%{_bindir} SBINDIR=%{_sbindir} SYSCONFDIR=%{_sysconfdir}
+
+
+%files
+%defattr(-,root,root)
+%doc LICENSE README.md
+%attr(750, root, root) %dir /srv/formulas/base/saltstack-formulas-openvpn
+/srv/formulas/base/saltstack-formulas-openvpn/README.md
+/srv/formulas/base/saltstack-formulas-openvpn/LICENSE
+/srv/formulas/base/saltstack-formulas-openvpn/openvpn
+
+%config(noreplace) /etc/salt/minion.d/saltstack-formulas-openvpn.conf
+
+%changelog
+@CHANGELOG@

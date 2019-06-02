@@ -1,0 +1,30 @@
+From 67406ef7d7993ec35a4a343beee7c566b613689f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Pierret=20=28fepitre=29?=
+ <frederic.pierret@qubes-os.org>
+Date: Sun, 2 Jun 2019 15:51:42 +0200
+Subject: [PATCH] Fix recursively ownership of /etc/openvpn
+
+---
+ openvpn/config.sls | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/openvpn/config.sls b/openvpn/config.sls
+index f0c5f4d..048eeff 100644
+--- a/openvpn/config.sls
++++ b/openvpn/config.sls
+@@ -210,3 +210,11 @@ openvpn_config_{{ type }}_{{ name }}_{{ client }}_client_config:
+ {% endfor %}
+ {% endif %}
+ {% endfor %}
++
++/etc/openvpn:
++  file.directory:
++    - user: root
++    - group: root
++    - recurse:
++      - user
++      - group
+\ No newline at end of file
+-- 
+2.21.0
+
