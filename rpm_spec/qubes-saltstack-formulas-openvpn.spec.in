@@ -10,7 +10,8 @@ URL:		https://www.qubes-os.org/
 Source:	%{name}-%{version}.tar.gz
 
 Patch0: 0001-Cache-necessary-files-for-rendering.patch
-Patch1: 0002-Fix-recursively-ownership-of-etc-openvpn.patch
+Patch1: 0002-Qubes-basic-integration.patch
+Patch2: 0003-Fix-recursively-ownership-of-etc-openvpn.patch
 
 Requires:	qubes-mgmt-salt
 

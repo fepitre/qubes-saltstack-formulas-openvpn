@@ -1,0 +1,37 @@
+From bc344496a6a84e080254b5d48963fc56bc4843ac Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Pierret=20=28fepitre=29?=
+ <frederic.pierret@qubes-os.org>
+Date: Sat, 22 Jun 2019 15:32:13 +0200
+Subject: [PATCH] Qubes: basic integration
+
+---
+ openvpn/init.sls | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/openvpn/init.sls b/openvpn/init.sls
+index 04018e8..4c1aae1 100644
+--- a/openvpn/init.sls
++++ b/openvpn/init.sls
+@@ -38,6 +38,19 @@ cache_ifconfig_pool_persist_jinja:
+     - cached
+     - name: salt://openvpn/files/ifconfig_pool_persist.jinja
+ 
++/rw/config/qubes-bind-dirs.d/openvpn.conf:
++  file.managed:
++    - makedirs: True
++    - mode: 0600
++    - contents: |
++        binds+=( '/etc/openvpn/' )
++
++bind-dirs-openvpn:
++  cmd.run:
++    - name: /usr/lib/qubes/bind-dirs.sh umount && /usr/lib/qubes/bind-dirs.sh
++    - require:
++        - file: /rw/config/qubes-bind-dirs.d/openvpn.conf
++
+ # This is the main state file for configuring openvpn.
+ 
+ include:
+-- 
+2.21.0
+
